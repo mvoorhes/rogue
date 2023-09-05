@@ -1,18 +1,18 @@
 # A Guide to the Dungeons of Doom
 
-## # Authors:
+### Authors:
 - Michael C. Toy
 - Kenneth C. R. C. Arnold
 - Computer Systems Research Group
 - Department of Electrical Engineering and Computer Science
 - University of California Berkeley, California 94720
 
-## # Abstract
+### Abstract
 
 Rogue is a visual CRT based fantasy game which runs under the UNIX� timesharing system. This paper describes how 
 to play rogue, and gives a few hints for those who might otherwise get lost in the Dungeons of Doom.
 
-##  1. Introduction
+## 1. Introduction
 
 You have just finished your years as a student at the local fighter's guild. After much practice and sweat you have finally completed your training and are ready to embark upon a perilous adventure. As a test of your skills, the local guildmasters have sent you into the Dungeons of Doom. Your task is to return with the Amulet of Yendor. Your reward for the completion of this task will be a full membership in the local guild. In addition, you are allowed to keep all the loot you bring back from the dungeons.
 
@@ -33,7 +33,7 @@ morning you gather your weapons, put on your armor, eat what
 is almost your last food, and enter the
 dungeons.
 
-##  2. What is going on here?
+## 2. What is going on here?
 
 You have just begun a game of rogue. Your
 goal is to grab as much treasure as you can, find the Amulet
@@ -54,7 +54,7 @@ other hand, generates a new dungeon every time you play it
 and even the author finds it an entertaining and exciting
 game.
 
-##  3. What do all those things on the screen mean?
+## 3. What do all those things on the screen mean?
 In order to understand what is going on in
 rogue you have to first get some grasp of what rogue is
 doing with the screen. The rogue screen is intended to
