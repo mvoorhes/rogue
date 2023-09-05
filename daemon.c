@@ -35,8 +35,8 @@ d_slot()
     register struct delayed_action *dev;
 
     for (dev = d_list; dev <= &d_list[MAXDAEMONS-1]; dev++)
-	if (dev->d_type == EMPTY)
-	    return dev;
+        if (dev->d_type == EMPTY)
+            return dev;
 #ifdef MASTER
     debug("Ran out of fuse slots");
 #endif
@@ -53,8 +53,8 @@ find_slot(void (*func)())
     register struct delayed_action *dev;
 
     for (dev = d_list; dev <= &d_list[MAXDAEMONS-1]; dev++)
-	if (dev->d_type != EMPTY && func == dev->d_func)
-	    return dev;
+        if (dev->d_type != EMPTY && func == dev->d_func)
+            return dev;
     return NULL;
 }
 
@@ -84,7 +84,7 @@ kill_daemon(void (*func)())
     register struct delayed_action *dev;
 
     if ((dev = find_slot(func)) == NULL)
-	return;
+	    return;
     /*
      * Take it out of the list
      */
@@ -108,8 +108,8 @@ do_daemons(int flag)
 	/*
 	 * Executing each one, giving it the proper arguments
 	 */
-	if (dev->d_type == flag && dev->d_time == DAEMON)
-	    (*dev->d_func)(dev->d_arg);
+        if (dev->d_type == flag && dev->d_time == DAEMON)
+            (*dev->d_func)(dev->d_arg);
 }
 
 /*
@@ -138,7 +138,7 @@ lengthen(void (*func)(), int xtime)
     register struct delayed_action *wire;
 
     if ((wire = find_slot(func)) == NULL)
-	return;
+	    return;
     wire->d_time += xtime;
 }
 
@@ -152,7 +152,7 @@ extinguish(void (*func)())
     register struct delayed_action *wire;
 
     if ((wire = find_slot(func)) == NULL)
-	return;
+	    return;
     wire->d_type = EMPTY;
 }
 

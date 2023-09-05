@@ -47,29 +47,29 @@ do_move(int dy, int dx)
     firstmove = FALSE;
     if (no_move)
     {
-	no_move--;
-	msg("you are still stuck in the bear trap");
-	return;
+		no_move--;
+		msg("you are still stuck in the bear trap");
+		return;
     }
     /*
      * Do a confused move (maybe)
      */
     if (on(player, ISHUH) && rnd(5) != 0)
     {
-	nh = *rndmove(&player);
-	if (ce(nh, hero))
-	{
-	    after = FALSE;
-	    running = FALSE;
-	    to_death = FALSE;
-	    return;
-	}
+		nh = *rndmove(&player);
+		if (ce(nh, hero))
+		{
+			after = FALSE;
+			running = FALSE;
+			to_death = FALSE;
+			return;
+		}
     }
     else
     {
-over:
-	nh.y = hero.y + dy;
-	nh.x = hero.x + dx;
+	over:
+		nh.y = hero.y + dy;
+		nh.x = hero.x + dx;
     }
 
     /*
@@ -77,29 +77,29 @@ over:
      * diagonal move, and stop him if he did.
      */
     if (nh.x < 0 || nh.x >= NUMCOLS || nh.y <= 0 || nh.y >= NUMLINES - 1)
-	goto hit_bound;
+		goto hit_bound;
     if (!diag_ok(&hero, &nh))
     {
-	after = FALSE;
-	running = FALSE;
-	return;
+		after = FALSE;
+		running = FALSE;
+		return;
     }
     if (running && ce(hero, nh))
-	after = running = FALSE;
+		after = running = FALSE;
     fl = flat(nh.y, nh.x);
     ch = winat(nh.y, nh.x);
     if (!(fl & F_REAL) && ch == FLOOR)
     {
-	if (!on(player, ISLEVIT))
-	{
-	    chat(nh.y, nh.x) = ch = TRAP;
-	    flat(nh.y, nh.x) |= F_REAL;
-	}
+		if (!on(player, ISLEVIT))
+		{
+			chat(nh.y, nh.x) = ch = TRAP;
+			flat(nh.y, nh.x) |= F_REAL;
+		}
     }
     else if (on(player, ISHELD) && ch != 'F')
     {
-	msg("you are being held");
-	return;
+		msg("you are being held");
+		return;
     }
     switch (ch)
     {
@@ -178,7 +178,7 @@ hit_bound:
 	    goto move_stuff;
 	case FLOOR:
 	    if (!(fl & F_REAL))
-		be_trapped(&hero);
+			be_trapped(&hero);
 	    goto move_stuff;
 	case STAIRS:
 	    seenstairs = TRUE;
@@ -186,16 +186,16 @@ hit_bound:
 	default:
 	    running = FALSE;
 	    if (isupper(ch) || moat(nh.y, nh.x))
-		fight(&nh, cur_weapon, FALSE);
+			fight(&nh, cur_weapon, FALSE);
 	    else
 	    {
-		if (ch != STAIRS)
-		    take = ch;
-move_stuff:
-		mvaddch(hero.y, hero.x, floor_at());
-		if ((fl & F_PASS) && chat(oldpos.y, oldpos.x) == DOOR)
-		    leave_room(&nh);
-		hero = nh;
+			if (ch != STAIRS)
+				take = ch;
+	move_stuff:
+			mvaddch(hero.y, hero.x, floor_at());
+			if ((fl & F_PASS) && chat(oldpos.y, oldpos.x) == DOOR)
+				leave_room(&nh);
+			hero = nh;
 	    }
     }
 }
@@ -210,8 +210,7 @@ turn_ok(int y, int x)
     PLACE *pp;
 
     pp = INDEX(y, x);
-    return (pp->p_ch == DOOR
-	|| (pp->p_flags & (F_REAL|F_PASS)) == (F_REAL|F_PASS));
+    return (pp->p_ch == DOOR || (pp->p_flags & (F_REAL|F_PASS)) == (F_REAL|F_PASS));
 }
 
 /*
@@ -227,13 +226,13 @@ turnref()
     pp = INDEX(hero.y, hero.x);
     if (!(pp->p_flags & F_SEEN))
     {
-	if (jump)
-	{
-	    leaveok(stdscr, TRUE);
-	    refresh();
-	    leaveok(stdscr, FALSE);
-	}
-	pp->p_flags |= F_SEEN;
+		if (jump)
+		{
+			leaveok(stdscr, TRUE);
+			refresh();
+			leaveok(stdscr, FALSE);
+		}
+		pp->p_flags |= F_SEEN;
     }
 }
 
@@ -249,10 +248,10 @@ door_open(struct room *rp)
     int y, x;
 
     if (!(rp->r_flags & ISGONE))
-	for (y = rp->r_pos.y; y < rp->r_pos.y + rp->r_max.y; y++)
-	    for (x = rp->r_pos.x; x < rp->r_pos.x + rp->r_max.x; x++)
-		if (isupper(winat(y, x)))
-		    wake_monster(y, x);
+		for (y = rp->r_pos.y; y < rp->r_pos.y + rp->r_max.y; y++)
+			for (x = rp->r_pos.x; x < rp->r_pos.x + rp->r_max.x; x++)
+				if (isupper(winat(y, x)))
+					wake_monster(y, x);
 }
 
 /*
@@ -267,7 +266,7 @@ be_trapped(coord *tc)
     char tr;
 
     if (on(player, ISLEVIT))
-	return T_RUST;	/* anything that's not a door or teleport */
+		return T_RUST;	/* anything that's not a door or teleport */
     running = FALSE;
     count = FALSE;
     pp = INDEX(tc->y, tc->x);
@@ -372,22 +371,22 @@ rndmove(THING *who)
      * (I.e., bump into the wall or whatever)
      */
     if (y == who->t_pos.y && x == who->t_pos.x)
-	return &ret;
+		return &ret;
     if (!diag_ok(&who->t_pos, &ret))
-	goto bad;
+		goto bad;
     else
     {
-	ch = winat(y, x);
-	if (!step_ok(ch))
-	    goto bad;
-	if (ch == SCROLL)
-	{
-	    for (obj = lvl_obj; obj != NULL; obj = next(obj))
-		if (y == obj->o_pos.y && x == obj->o_pos.x)
-		    break;
-	    if (obj != NULL && obj->o_which == S_SCARE)
-		goto bad;
-	}
+		ch = winat(y, x);
+		if (!step_ok(ch))
+			goto bad;
+		if (ch == SCROLL)
+		{
+			for (obj = lvl_obj; obj != NULL; obj = next(obj))
+				if (y == obj->o_pos.y && x == obj->o_pos.x)
+					break;
+			if (obj != NULL && obj->o_which == S_SCARE)
+				goto bad;
+		}
     }
     return &ret;
 
@@ -405,21 +404,20 @@ bad:
 void
 rust_armor(THING *arm)
 {
-    if (arm == NULL || arm->o_type != ARMOR || arm->o_which == LEATHER ||
-	arm->o_arm >= 9)
+    if (arm == NULL || arm->o_type != ARMOR || arm->o_which == LEATHER || arm->o_arm >= 9)
 	    return;
 
     if ((arm->o_flags & ISPROT) || ISWEARING(R_SUSTARM))
     {
-	if (!to_death)
-	    msg("the rust vanishes instantly");
+		if (!to_death)
+			msg("the rust vanishes instantly");
     }
     else
     {
-	arm->o_arm++;
-	if (!terse)
-	    msg("your armor appears to be weaker now. Oh my!");
-	else
-	    msg("your armor weakens");
+		arm->o_arm++;
+		if (!terse)
+			msg("your armor appears to be weaker now. Oh my!");
+		else
+			msg("your armor weakens");
     }
 }

@@ -30,10 +30,10 @@ msg(char *fmt, ...)
      */
     if (*fmt == '\0')
     {
-	move(0, 0);
-	clrtoeol();
-	mpos = 0;
-	return ~ESCAPE;
+        move(0, 0);
+        clrtoeol();
+        mpos = 0;
+        return ~ESCAPE;
     }
     /*
      * otherwise add to the message and flush it out
@@ -70,33 +70,33 @@ endmsg()
     char ch;
 
     if (save_msg)
-	strcpy(huh, msgbuf);
+	    strcpy(huh, msgbuf);
     if (mpos)
     {
-	look(FALSE);
-	mvaddstr(0, mpos, "--More--");
-	refresh();
-	if (!msg_esc)
-	    wait_for(' ');
-	else
-	{
-	    while ((ch = readchar()) != ' ')
-		if (ch == ESCAPE)
-		{
-		    msgbuf[0] = '\0';
-		    mpos = 0;
-		    newpos = 0;
-		    msgbuf[0] = '\0';
-		    return ESCAPE;
-		}
-	}
+        look(FALSE);
+        mvaddstr(0, mpos, "--More--");
+        refresh();
+        if (!msg_esc)
+            wait_for(' ');
+        else
+        {
+            while ((ch = readchar()) != ' ')
+            if (ch == ESCAPE)
+            {
+                msgbuf[0] = '\0';
+                mpos = 0;
+                newpos = 0;
+                msgbuf[0] = '\0';
+                return ESCAPE;
+            }
+        }
     }
     /*
      * All messages should start with uppercase, except ones that
      * start with a pack addressing character
      */
     if (islower(msgbuf[0]) && !lower_msg && msgbuf[1] != ')')
-	msgbuf[0] = (char) toupper(msgbuf[0]);
+    	msgbuf[0] = (char) toupper(msgbuf[0]);
     mvaddstr(0, 0, msgbuf);
     clrtoeol();
     mpos = newpos;
@@ -134,12 +134,12 @@ step_ok(int ch)
 {
     switch (ch)
     {
-	case ' ':
-	case '|':
-	case '-':
-	    return FALSE;
-	default:
-	    return (!isalpha(ch));
+        case ' ':
+        case '|':
+        case '-':
+            return FALSE;
+        default:
+            return (!isalpha(ch));
     }
 }
 
@@ -156,7 +156,7 @@ readchar()
 
     if (ch == 3)
     {
-	quit(0);
+	    quit(0);
         return(27);
     }
 
@@ -181,7 +181,7 @@ status()
     static int s_exp = 0;
     static char *state_name[] =
     {
-	"", "Hungry", "Weak", "Faint"
+    	"", "Hungry", "Weak", "Faint"
     };
 
     /*
@@ -201,10 +201,10 @@ status()
     getyx(stdscr, oy, ox);
     if (s_hp != max_hp)
     {
-	temp = max_hp;
-	s_hp = max_hp;
-	for (hpwidth = 0; temp; hpwidth++)
-	    temp /= 10;
+        temp = max_hp;
+        s_hp = max_hp;
+        for (hpwidth = 0; temp; hpwidth++)
+            temp /= 10;
     }
 
     /*
@@ -219,7 +219,7 @@ status()
 
     if (stat_msg)
     {
-	move(0, 0);
+	    move(0, 0);
         msg("Level: %d  Gold: %-5d  Hp: %*d(%*d)  Str: %2d(%d)  Arm: %-2d  Exp: %d/%ld  %s",
 	    level, purse, hpwidth, pstats.s_hpt, hpwidth, max_hp, pstats.s_str,
 	    max_stats.s_str, 10 - s_arm, pstats.s_lvl, pstats.s_exp,
@@ -227,7 +227,7 @@ status()
     }
     else
     {
-	move(STATLINE, 0);
+	    move(STATLINE, 0);
                 
         printw("Level: %d  Gold: %-5d  Hp: %*d(%*d)  Str: %2d(%d)  Arm: %-2d  Exp: %d/%d  %s",
 	    level, purse, hpwidth, pstats.s_hpt, hpwidth, max_hp, pstats.s_str,
@@ -250,10 +250,10 @@ wait_for(int ch)
 
     if (ch == '\n')
         while ((c = readchar()) != '\n' && c != '\r')
-	    continue;
+	        continue;
     else
         while (readchar() != ch)
-	    continue;
+	        continue;
 }
 
 /*
